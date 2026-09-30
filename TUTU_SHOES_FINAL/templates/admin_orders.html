@@ -1,0 +1,252 @@
+{% extends "admin_base.html" %}
+
+{% block title %}Orders | TUTU SHOES{% endblock %}
+
+{% block content %}
+
+<div class="admin-main">
+
+    <div class="admin-head">
+
+        <div>
+            <p class="eyebrow">SALES</p>
+            <h1>Orders</h1>
+        </div>
+
+    </div>
+
+
+    <div class="table-card">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Order</th>
+                    <th>Customer Details</th>
+                    <th>Total</th>
+                    <th>Payment</th>
+                    <th>Status</th>
+                    <th>Courier</th>
+                    <th>Actions</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for order in orders %}
+
+                <tr>
+
+                    <!-- ORDER -->
+                    <td>
+
+                        <strong>
+                            {{ order.order_id }}
+                        </strong>
+
+                        <br>
+
+                        <small>
+                            {{ order.created_at }}
+                        </small>
+
+                    </td>
+
+
+                    <!-- CUSTOMER DETAILS -->
+                    <td>
+
+                        <strong>
+                            {{ order.customer_name }}
+                        </strong>
+
+                        <br>
+
+                        <small>
+                            📱 {{ order.phone }}
+                        </small>
+
+                        <br><br>
+
+                        <small>
+
+                            <strong>Address:</strong><br>
+
+                            {{ order.address or '-' }}
+
+                            <br>
+
+                            <strong>City:</strong>
+                            {{ order.city or '-' }}
+
+                            <br>
+
+                            <strong>District:</strong>
+                            {{ order.district or '-' }}
+
+                            <br>
+
+                            <strong>State:</strong>
+                            {{ order.state or '-' }}
+
+                            <br>
+
+                            <strong>Pincode:</strong>
+                            {{ order.pincode or '-' }}
+
+                        </small>
+
+                    </td>
+
+
+                    <!-- TOTAL -->
+                    <td>
+
+                        ₹{{ "%.2f"|format(order.total_amount) }}
+
+                    </td>
+
+
+                    <!-- PAYMENT -->
+                    <td>
+
+                        {{ order.payment_status }}
+
+                    </td>
+
+
+                    <!-- STATUS -->
+                    <td>
+
+                        <form
+                            method="POST"
+                            action="{{ url_for('update_order_status') }}"
+                        >
+
+                            <input
+                                type="hidden"
+                                name="order_id"
+                                value="{{ order.order_id }}"
+                            >
+
+                            <select name="order_status">
+
+                                {% for s in [
+                                    'Pending',
+                                    'Confirmed',
+                                    'Packed',
+                                    'Shipped',
+                                    'Delivered',
+                                    'Cancelled'
+                                ] %}
+
+                                <option
+                                    value="{{ s }}"
+                                    {% if order.order_status == s %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ s }}
+                                </option>
+
+                                {% endfor %}
+
+                            </select>
+
+
+                            <button
+                                class="action-btn"
+                                type="submit"
+                            >
+                                Update
+                            </button>
+
+                        </form>
+
+                    </td>
+
+
+                    <!-- COURIER -->
+                    <td>
+
+                        {{ order.courier_name or '-' }}
+
+                        <br>
+
+                        {{ order.tracking_number or '-' }}
+
+                    </td>
+
+
+                    <!-- ACTIONS -->
+                    <td>
+
+                        <form
+                            method="POST"
+                            action="{{ url_for('update_courier') }}"
+                            class="courier-form"
+                        >
+
+                            <input
+                                type="hidden"
+                                name="order_id"
+                                value="{{ order.order_id }}"
+                            >
+
+
+                            <input
+                                name="courier_name"
+                                placeholder="Courier"
+                                value="{{ order.courier_name or '' }}"
+                            >
+
+
+                            <input
+                                name="tracking_number"
+                                placeholder="Tracking"
+                                value="{{ order.tracking_number or '' }}"
+                            >
+
+
+                            <button
+                                class="action-btn"
+                                type="submit"
+                            >
+                                Save
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+
+                {% else %}
+
+                <tr>
+
+                    <td
+                        colspan="7"
+                        class="empty"
+                    >
+                        No orders yet.
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

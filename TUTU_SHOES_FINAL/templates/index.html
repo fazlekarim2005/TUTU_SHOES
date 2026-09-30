@@ -1,0 +1,473 @@
+{% extends "base.html" %}
+
+{% block title %}TUTU SHOES | Online Store{% endblock %}
+
+{% block content %}
+
+<!-- ================= HERO ADVERTISEMENT ================= -->
+
+<section class="home-hero">
+
+    <div class="hero-content">
+
+        <p class="eyebrow hero-eyebrow">
+            TUTU SHOES · BINJHARPUR
+        </p>
+
+        <h1>
+            Step Into<br>
+            Your Style.
+        </h1>
+
+        <p class="hero-text">
+            Discover footwear for Men, Women and Kids.
+            From everyday comfort to your special occasions.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a
+                class="btn primary hero-btn"
+                href="{{ url_for('products') }}"
+            >
+                Shop Now
+            </a>
+
+            <a
+                class="btn hero-secondary-btn"
+                href="{{ url_for('products') }}"
+            >
+                Explore Collection
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="hero-shoe-art">
+
+        <div class="shoe-circle">
+            👟
+        </div>
+
+        <div class="floating-card">
+            <strong>New Collection</strong>
+            <span>Explore the latest styles</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CATEGORY SECTION ================= -->
+
+<section class="section category-section">
+
+    <div class="section-head category-heading">
+
+        <div>
+
+            <p class="eyebrow">
+                SHOP YOUR STYLE
+            </p>
+
+            <h2>
+                Shop By Category
+            </h2>
+
+        </div>
+
+        <a href="{{ url_for('products') }}">
+            View all →
+        </a>
+
+    </div>
+
+
+    <div class="category-grid">
+
+        <a
+            class="category-card category-formal"
+            href="{{ url_for('products', category='Formal') }}"
+        >
+
+            <div class="category-icon">
+                👞
+            </div>
+
+            <h3>Formal Shoes</h3>
+
+            <p>
+                Smart footwear for every occasion.
+            </p>
+
+            <span>Shop Formal →</span>
+
+        </a>
+
+
+        <a
+            class="category-card category-sneakers"
+            href="{{ url_for('products', category='Sneakers') }}"
+        >
+
+            <div class="category-icon">
+                👟
+            </div>
+
+            <h3>Sneakers</h3>
+
+            <p>
+                Trendy styles for everyday comfort.
+            </p>
+
+            <span>Shop Sneakers →</span>
+
+        </a>
+
+
+        <a
+            class="category-card category-sports"
+            href="{{ url_for('products', category='Sports Shoes') }}"
+        >
+
+            <div class="category-icon">
+                🏃
+            </div>
+
+            <h3>Sports Shoes</h3>
+
+            <p>
+                Comfort and support for active days.
+            </p>
+
+            <span>Shop Sports →</span>
+
+        </a>
+
+
+        <a
+            class="category-card category-crocs"
+            href="{{ url_for('products', category='Crocs') }}"
+        >
+
+            <div class="category-icon">
+                🩴
+            </div>
+
+            <h3>Crocs</h3>
+
+            <p>
+                Easy comfort for casual everyday wear.
+            </p>
+
+            <span>Shop Crocs →</span>
+
+        </a>
+
+
+        <a
+            class="category-card category-sliders"
+            href="{{ url_for('products', category='Sliders') }}"
+        >
+
+            <div class="category-icon">
+                🩴
+            </div>
+
+            <h3>Sliders</h3>
+
+            <p>
+                Simple, comfortable everyday footwear.
+            </p>
+
+            <span>Shop Sliders →</span>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PROMOTIONAL AD ================= -->
+
+<section class="promo-section">
+
+    <div class="promo-content">
+
+        <p class="eyebrow">
+            FOOTWEAR COLLECTION
+        </p>
+
+        <h2>
+            Find Your Perfect Pair.
+        </h2>
+
+        <p>
+            Quality footwear for everyday life,
+            special occasions and active lifestyles.
+        </p>
+
+        <a
+            class="btn primary"
+            href="{{ url_for('products') }}"
+        >
+            Shop Collection
+        </a>
+
+    </div>
+
+    <div class="promo-visual">
+
+        <div class="promo-shoe">
+            👟
+        </div>
+
+        <div class="promo-shoe small">
+            👞
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= TRUST SECTION ================= -->
+
+<section class="section trust-section">
+
+    <div class="trust-grid">
+
+        <div class="trust-card">
+
+            <div class="trust-icon">
+                🚚
+            </div>
+
+            <div>
+
+                <h3>Delivery Across India</h3>
+
+                <p>
+                    We deliver your orders across India.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="trust-card">
+
+            <div class="trust-icon">
+                🔒
+            </div>
+
+            <div>
+
+                <h3>Secure Payments</h3>
+
+                <p>
+                    Safe and secure prepaid checkout.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="trust-card">
+
+            <div class="trust-icon">
+                📦
+            </div>
+
+            <div>
+
+                <h3>Order Tracking</h3>
+
+                <p>
+                    Track your order from confirmation to delivery.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="trust-card">
+
+            <div class="trust-icon">
+                💬
+            </div>
+
+            <div>
+
+                <h3>Customer Support</h3>
+
+                <p>
+                    We're here to help with your order.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FEATURED PRODUCTS ================= -->
+
+<section class="section featured-section">
+
+    <div class="section-head">
+
+        <div>
+
+            <p class="eyebrow">
+                LATEST ARRIVALS
+            </p>
+
+            <h2>
+                Featured Products
+            </h2>
+
+        </div>
+
+        <a href="{{ url_for('products') }}">
+            View all →
+        </a>
+
+    </div>
+
+
+    <div class="product-grid">
+
+        {% for product in products %}
+
+        <article class="product-card">
+
+            <a
+                href="{{ url_for('product_detail', product_id=product.id) }}"
+            >
+
+                {% if product.image_url %}
+
+                    {% if product.image_url.startswith('http') %}
+
+                        <img
+                            src="{{ product.image_url }}"
+                            alt="{{ product.product_name }}"
+                        >
+
+                    {% else %}
+
+                        <img
+                            src="{{ url_for('static', filename=product.image_url) }}"
+                            alt="{{ product.product_name }}"
+                        >
+
+                    {% endif %}
+
+                {% else %}
+
+                    <div class="product-placeholder">
+                        TUTU SHOES
+                    </div>
+
+                {% endif %}
+
+            </a>
+
+
+            <div class="product-info">
+
+                <small>
+                    {{ product.brand or 'Various Brands' }}
+                    ·
+                    {{ product.category }}
+                </small>
+
+                <h3>
+                    {{ product.product_name }}
+                </h3>
+
+                <strong>
+                    ₹{{ "%.2f"|format(product.price) }}
+                </strong>
+
+                <span class="stock-note">
+                    {{ product.stock_quantity }} in stock
+                </span>
+
+            </div>
+
+        </article>
+
+        {% else %}
+
+        <div class="empty-home-products">
+
+            <div class="empty-home-icon">
+                👟
+            </div>
+
+            <h3>
+                Products Coming Soon
+            </h3>
+
+            <p>
+                New footwear will appear here when products
+                are added from the Admin panel.
+            </p>
+
+            <a
+                class="btn primary"
+                href="{{ url_for('products') }}"
+            >
+                Browse Shop
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- ================= FINAL CTA ================= -->
+
+<section class="final-cta">
+
+    <div>
+
+        <p class="eyebrow">
+            TUTU SHOES
+        </p>
+
+        <h2>
+            Ready to find your next pair?
+        </h2>
+
+        <p>
+            Explore our collection and choose your style.
+        </p>
+
+        <a
+            class="btn primary"
+            href="{{ url_for('products') }}"
+        >
+            Start Shopping
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

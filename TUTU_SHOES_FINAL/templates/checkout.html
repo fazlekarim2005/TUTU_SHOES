@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Checkout | TUTU SHOES{% endblock %}
+{% block content %}
+<section class="section narrow">
+    <p class="eyebrow">CHECKOUT</p>
+    <h1>Delivery Details</h1>
+    <div class="notice">Phase 1 payment mode: prepaid test checkout. Razorpay will be connected using the shop owner's official merchant account before production.</div>
+    <form id="checkoutForm" class="form-card">
+        <input name="customer_name" placeholder="Full name" required>
+        <input name="phone" placeholder="Phone number" required>
+        <textarea name="address" placeholder="Full delivery address" required></textarea>
+        <input name="city" placeholder="City" required>
+        <input name="district" placeholder="District" required>
+        <input name="state" value="Odisha" placeholder="State" required>
+        <input name="pincode" placeholder="Pincode" required>
+        <button class="btn primary full" type="submit">Confirm Prepaid Order</button>
+    </form>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+document.getElementById("checkoutForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const cart = getCart();
+    if (!cart.length) { alert("Your cart is empty."); return; }
+
+    const data = Object.fromEntries(new FormData(this).entries());
+    data.items = cart.map(item => ({
+        product_id: item.product_id,
+        quantity: item.quantity,
+        size: item.size || "",
+        color: item.color || ""
+    }));
+
+    const response = await fetch("{{ url_for('create_order') }}", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    });
+    const result = await response.json();
+
+    if (!result.success) {
+        alert(result.message || "Order could not be placed.");
+        return;
+    }
+
+    localStorage.removeItem("tutuCart");
+    window.location.href = "/order-success/" + result.order_id;
+});
+</script>
+{% endblock %}

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Admin | TUTU SHOES{% endblock %}</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f5f6f8;
+        }
+
+        /* =========================
+           ADMIN LAYOUT
+        ========================= */
+
+        .admin-layout {
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .admin-sidebar {
+            width: 240px;
+            min-height: 100vh;
+            background: #111111;
+            color: #ffffff;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .admin-sidebar-brand {
+            padding: 22px 20px;
+            border-bottom: 1px solid #2b2b2b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .admin-logo {
+            width: 125px;
+            height: 55px;
+            object-fit: contain;
+        }
+
+        .admin-menu {
+            padding: 20px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .admin-menu-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #888;
+            letter-spacing: 1px;
+            padding: 8px 12px;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .admin-menu a {
+            color: #d8d8d8;
+            text-decoration: none;
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-menu a:hover {
+            background: #252525;
+            color: #ffffff;
+        }
+
+        .admin-menu a.active {
+            background: #ffffff;
+            color: #111111;
+        }
+
+        .admin-sidebar-bottom {
+            margin-top: auto;
+            padding: 15px 14px;
+            border-top: 1px solid #2b2b2b;
+        }
+
+        .admin-sidebar-bottom a {
+            display: block;
+            color: #cccccc;
+            text-decoration: none;
+            padding: 11px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .admin-sidebar-bottom a:hover {
+            background: #252525;
+            color: #ffffff;
+        }
+
+        /* =========================
+           MAIN AREA
+        ========================= */
+
+        .admin-content {
+            margin-left: 240px;
+            width: calc(100% - 240px);
+            min-height: 100vh;
+        }
+
+        /* =========================
+           TOP BAR
+        ========================= */
+
+        .admin-topbar {
+            height: 72px;
+            background: #ffffff;
+            border-bottom: 1px solid #e5e5e5;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+
+        .admin-topbar-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #111111;
+        }
+
+        .admin-topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .admin-user {
+            font-size: 13px;
+            font-weight: 700;
+            color: #333333;
+            background: #f3f3f3;
+            padding: 9px 13px;
+            border-radius: 20px;
+        }
+
+        .admin-view-store {
+            text-decoration: none;
+            color: #ffffff;
+            background: #111111;
+            padding: 9px 14px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .admin-view-store:hover {
+            background: #333333;
+        }
+
+        /* =========================
+           CONTENT
+        ========================= */
+
+        .admin-page-content {
+            padding: 30px;
+        }
+
+        /* =========================
+           FLASH MESSAGE
+        ========================= */
+
+        .flash-wrap {
+            margin-left: 240px;
+            padding: 15px 30px 0;
+        }
+
+        .flash {
+            background: #e9f7ef;
+            color: #176b3a;
+            border: 1px solid #bce5ca;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .admin-footer {
+            margin-left: 240px;
+            padding: 22px 30px;
+            border-top: 1px solid #e5e5e5;
+            background: #ffffff;
+            color: #777777;
+            font-size: 13px;
+        }
+
+        /* =========================
+           MOBILE HEADER
+        ========================= */
+
+        .mobile-admin-header {
+            display: none;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .admin-sidebar {
+                display: none;
+            }
+
+            .admin-content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .admin-topbar {
+                height: auto;
+                min-height: 65px;
+                padding: 12px 18px;
+            }
+
+            .admin-topbar-title {
+                font-size: 17px;
+            }
+
+            .admin-page-content {
+                padding: 20px 15px;
+            }
+
+            .flash-wrap {
+                margin-left: 0;
+                padding: 12px 15px 0;
+            }
+
+            .admin-footer {
+                margin-left: 0;
+                padding: 18px 15px;
+            }
+
+            .admin-view-store {
+                display: none;
+            }
+
+            .admin-user {
+                font-size: 12px;
+            }
+
+            .mobile-admin-header {
+                display: flex;
+                background: #111111;
+                padding: 12px 15px;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .mobile-admin-header img {
+                width: 105px;
+                height: 42px;
+                object-fit: contain;
+            }
+
+            .mobile-admin-header a {
+                color: #ffffff;
+                text-decoration: none;
+                font-size: 13px;
+                font-weight: 700;
+                padding: 8px 11px;
+                border: 1px solid #555555;
+                border-radius: 6px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- =========================
+     MOBILE HEADER
+========================= -->
+
+<div class="mobile-admin-header">
+
+    <a href="{{ url_for('admin_dashboard') }}">
+        <img
+            src="{{ url_for('static', filename='images/tutu-shoes-logo.png') }}"
+            alt="TUTU SHOES"
+        >
+    </a>
+
+    <a href="{{ url_for('admin_logout') }}">
+        Logout
+    </a>
+
+</div>
+
+
+<div class="admin-layout">
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <aside class="admin-sidebar">
+
+        <div class="admin-sidebar-brand">
+
+            <a href="{{ url_for('admin_dashboard') }}">
+
+                <img
+                    src="{{ url_for('static', filename='images/tutu-shoes-logo.png') }}"
+                    alt="TUTU SHOES"
+                    class="admin-logo"
+                >
+
+            </a>
+
+        </div>
+
+
+        <nav class="admin-menu">
+
+            <div class="admin-menu-title">
+                Management
+            </div>
+
+            <a href="{{ url_for('admin_dashboard') }}">
+                📊
+                <span>Dashboard</span>
+            </a>
+
+            <a href="{{ url_for('admin_products') }}">
+                👟
+                <span>Products</span>
+            </a>
+
+            <a href="{{ url_for('admin_orders') }}">
+                🛒
+                <span>Orders</span>
+            </a>
+
+        </nav>
+
+
+        <div class="admin-sidebar-bottom">
+
+            <a href="{{ url_for('admin_logout') }}">
+                ↪ Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <section class="admin-content">
+
+        <!-- TOP BAR -->
+
+        <header class="admin-topbar">
+
+            <div class="admin-topbar-title">
+                TUTU SHOES Admin
+            </div>
+
+            <div class="admin-topbar-right">
+
+                {% if session.get('admin_username') %}
+
+                    <span class="admin-user">
+                        👤 {{ session.get('admin_username') }}
+                    </span>
+
+                {% endif %}
+
+                <a
+    href="/"
+    class="admin-view-store"
+>
+    View Store
+</a>
+
+            </div>
+
+        </header>
+
+
+        <!-- FLASH -->
+
+        {% with messages = get_flashed_messages() %}
+
+            {% if messages %}
+
+                <div class="flash-wrap">
+
+                    {% for message in messages %}
+
+                        <div class="flash">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- PAGE CONTENT -->
+
+        <main class="admin-page-content">
+
+            {% block content %}{% endblock %}
+
+        </main>
+
+
+        <!-- FOOTER -->
+
+        <footer class="admin-footer">
+
+            <strong>TUTU SHOES ADMIN</strong>
+            · Binjharpur, Jajpur, Odisha
+            · © 2026
+
+        </footer>
+
+    </section>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,523 @@
+{% extends "admin_base.html" %}
+
+{% block title %}Dashboard | TUTU SHOES{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-page">
+
+    <!-- PAGE HEADER -->
+    <div class="dashboard-header">
+
+        <div>
+            <p class="dashboard-eyebrow">CONTROL CENTER</p>
+            <h1>Dashboard</h1>
+            <p class="dashboard-subtitle">
+                Manage your TUTU SHOES store, products and orders.
+            </p>
+        </div>
+
+        <div class="dashboard-actions">
+            <a
+                href="{{ url_for('admin_products') }}"
+                class="dashboard-btn secondary"
+            >
+                Manage Products
+            </a>
+
+            <a
+                href="{{ url_for('admin_orders') }}"
+                class="dashboard-btn primary"
+            >
+                View Orders
+            </a>
+        </div>
+
+    </div>
+
+
+    <!-- STATS -->
+    <div class="dashboard-stats">
+
+        <div class="dashboard-stat-card">
+            <div class="stat-icon">🛒</div>
+            <div>
+                <span>Total Orders</span>
+                <strong>{{ total_orders }}</strong>
+            </div>
+        </div>
+
+        <div class="dashboard-stat-card">
+            <div class="stat-icon">✓</div>
+            <div>
+                <span>Confirmed</span>
+                <strong>{{ confirmed_orders }}</strong>
+            </div>
+        </div>
+
+        <div class="dashboard-stat-card">
+            <div class="stat-icon">⏳</div>
+            <div>
+                <span>Pending</span>
+                <strong>{{ pending_orders }}</strong>
+            </div>
+        </div>
+
+        <div class="dashboard-stat-card">
+            <div class="stat-icon">₹</div>
+            <div>
+                <span>Test Sales</span>
+                <strong>
+                    ₹{{ "%.2f"|format(total_sales) }}
+                </strong>
+            </div>
+        </div>
+
+        <div class="dashboard-stat-card">
+            <div class="stat-icon">👟</div>
+            <div>
+                <span>Total Products</span>
+                <strong>{{ total_products }}</strong>
+            </div>
+        </div>
+
+        <div class="dashboard-stat-card">
+            <div class="stat-icon">●</div>
+            <div>
+                <span>Active Products</span>
+                <strong>{{ active_products }}</strong>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- QUICK ACTIONS -->
+    <div class="dashboard-section">
+
+        <div class="section-heading">
+            <div>
+                <p class="dashboard-eyebrow">QUICK ACCESS</p>
+                <h2>Store Management</h2>
+            </div>
+        </div>
+
+
+        <div class="dashboard-management-grid">
+
+            <a
+                href="{{ url_for('admin_orders') }}"
+                class="management-card"
+            >
+                <div class="management-icon">
+                    🛒
+                </div>
+
+                <div>
+                    <h3>Orders</h3>
+
+                    <p>
+                        View customer orders, update order status
+                        and manage courier details.
+                    </p>
+                </div>
+
+                <span class="card-arrow">→</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('admin_products') }}"
+                class="management-card"
+            >
+                <div class="management-icon">
+                    👟
+                </div>
+
+                <div>
+                    <h3>Products</h3>
+
+                    <p>
+                        Add new products, edit existing products
+                        and manage your footwear catalogue.
+                    </p>
+                </div>
+
+                <span class="card-arrow">→</span>
+            </a>
+
+
+            <a
+                href="/"
+                class="management-card"
+            >
+                <div class="management-icon">
+                    🌐
+                </div>
+
+                <div>
+                    <h3>Storefront</h3>
+
+                    <p>
+                        Open the customer website and check
+                        the live shopping experience.
+                    </p>
+                </div>
+
+                <span class="card-arrow">→</span>
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- STORE STATUS -->
+    <div class="dashboard-section">
+
+        <div class="store-status-card">
+
+            <div>
+                <p class="dashboard-eyebrow">STORE STATUS</p>
+
+                <h2>
+                    TUTU SHOES is ready
+                </h2>
+
+                <p>
+                    Products, orders, customer accounts and
+                    order tracking are available from the admin panel.
+                </p>
+            </div>
+
+            <div class="status-badge">
+                <span></span>
+                System Active
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<style>
+
+    /* =========================
+       DASHBOARD
+    ========================= */
+
+    .dashboard-page {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .dashboard-header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 25px;
+        margin-bottom: 30px;
+    }
+
+    .dashboard-eyebrow {
+        margin: 0 0 7px;
+        color: #777;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+    }
+
+    .dashboard-header h1 {
+        margin: 0;
+        color: #111;
+        font-size: 32px;
+        font-weight: 800;
+    }
+
+    .dashboard-subtitle {
+        margin: 8px 0 0;
+        color: #777;
+        font-size: 14px;
+    }
+
+    .dashboard-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .dashboard-btn {
+        text-decoration: none;
+        padding: 11px 16px;
+        border-radius: 7px;
+        font-size: 13px;
+        font-weight: 700;
+        transition: 0.2s ease;
+    }
+
+    .dashboard-btn.primary {
+        background: #111;
+        color: #fff;
+    }
+
+    .dashboard-btn.primary:hover {
+        background: #333;
+    }
+
+    .dashboard-btn.secondary {
+        background: #fff;
+        color: #111;
+        border: 1px solid #ddd;
+    }
+
+    .dashboard-btn.secondary:hover {
+        background: #f1f1f1;
+    }
+
+
+    /* =========================
+       STATS
+    ========================= */
+
+    .dashboard-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-bottom: 38px;
+    }
+
+    .dashboard-stat-card {
+        background: #fff;
+        border: 1px solid #e6e6e6;
+        border-radius: 12px;
+        padding: 21px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        min-height: 105px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+
+    .stat-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 10px;
+        background: #f1f1f1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        font-weight: 800;
+        flex-shrink: 0;
+    }
+
+    .dashboard-stat-card span {
+        display: block;
+        color: #777;
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .dashboard-stat-card strong {
+        display: block;
+        color: #111;
+        font-size: 25px;
+        font-weight: 800;
+    }
+
+
+    /* =========================
+       MANAGEMENT
+    ========================= */
+
+    .dashboard-section {
+        margin-bottom: 35px;
+    }
+
+    .section-heading {
+        margin-bottom: 15px;
+    }
+
+    .section-heading h2 {
+        margin: 0;
+        color: #111;
+        font-size: 21px;
+        font-weight: 800;
+    }
+
+    .dashboard-management-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+    }
+
+    .management-card {
+        position: relative;
+        background: #fff;
+        border: 1px solid #e5e5e5;
+        border-radius: 12px;
+        padding: 23px;
+        text-decoration: none;
+        color: #111;
+        display: flex;
+        gap: 15px;
+        min-height: 150px;
+        transition: 0.2s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+
+    .management-card:hover {
+        transform: translateY(-2px);
+        border-color: #bbb;
+        box-shadow: 0 7px 20px rgba(0, 0, 0, 0.07);
+    }
+
+    .management-icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 9px;
+        background: #111;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 19px;
+        flex-shrink: 0;
+    }
+
+    .management-card h3 {
+        margin: 1px 0 7px;
+        font-size: 17px;
+        font-weight: 800;
+    }
+
+    .management-card p {
+        margin: 0;
+        color: #777;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .card-arrow {
+        position: absolute;
+        right: 18px;
+        bottom: 16px;
+        font-size: 18px;
+        color: #888;
+    }
+
+
+    /* =========================
+       STORE STATUS
+    ========================= */
+
+    .store-status-card {
+        background: #111;
+        color: #fff;
+        border-radius: 13px;
+        padding: 26px 28px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 25px;
+    }
+
+    .store-status-card .dashboard-eyebrow {
+        color: #999;
+    }
+
+    .store-status-card h2 {
+        margin: 0 0 7px;
+        font-size: 22px;
+    }
+
+    .store-status-card p:not(.dashboard-eyebrow) {
+        margin: 0;
+        color: #aaa;
+        font-size: 13px;
+        line-height: 1.6;
+        max-width: 650px;
+    }
+
+    .status-badge {
+        white-space: nowrap;
+        background: #fff;
+        color: #111;
+        padding: 9px 14px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+    .status-badge span {
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        background: #222;
+        border-radius: 50%;
+        margin-right: 6px;
+    }
+
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 1050px) {
+
+        .dashboard-stats {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .dashboard-management-grid {
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+    @media (max-width: 700px) {
+
+        .dashboard-header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .dashboard-header h1 {
+            font-size: 27px;
+        }
+
+        .dashboard-actions {
+            width: 100%;
+        }
+
+        .dashboard-btn {
+            flex: 1;
+            text-align: center;
+        }
+
+        .dashboard-stats {
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .dashboard-stat-card {
+            min-height: 90px;
+        }
+
+        .store-status-card {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .status-badge {
+            align-self: flex-start;
+        }
+
+    }
+
+</style>
+
+{% endblock %}

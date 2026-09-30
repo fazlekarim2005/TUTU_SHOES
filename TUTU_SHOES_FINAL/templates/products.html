@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}Shop | TUTU SHOES{% endblock %}
+
+{% block content %}
+
+<section class="section">
+
+    <div class="section-head">
+        <div>
+            <p class="eyebrow">CATALOGUE</p>
+            <h1>Shop Shoes</h1>
+        </div>
+    </div>
+
+    <form class="filter-bar" method="GET">
+
+        <input
+            name="search"
+            value="{{ search }}"
+            placeholder="Search product or brand..."
+        >
+
+        <select name="category">
+            <option value="">All Categories</option>
+
+            {% for c in categories %}
+                <option
+                    value="{{ c }}"
+                    {% if selected_category == c %}selected{% endif %}
+                >
+                    {{ c }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <select name="gender">
+            <option value="">All Genders</option>
+
+            {% for g in genders %}
+                <option
+                    value="{{ g }}"
+                    {% if selected_gender == g %}selected{% endif %}
+                >
+                    {{ g }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button class="btn primary" type="submit">
+            Filter
+        </button>
+
+        <a class="btn" href="{{ url_for('products') }}">
+            Clear
+        </a>
+
+    </form>
+
+
+    <div class="product-grid">
+
+        {% for product in products %}
+
+        <article class="product-card">
+
+            <a href="{{ url_for('product_detail', product_id=product.id) }}">
+
+                {% if product.image_url %}
+
+                    {% if product.image_url.startswith('http') %}
+
+                        <img
+                            src="{{ product.image_url }}"
+                            alt="{{ product.product_name }}"
+                        >
+
+                    {% else %}
+
+                        <img
+                            src="{{ url_for('static', filename=product.image_url) }}"
+                            alt="{{ product.product_name }}"
+                        >
+
+                    {% endif %}
+
+                {% else %}
+
+                    <div class="product-placeholder">
+                        TUTU SHOES
+                    </div>
+
+                {% endif %}
+
+            </a>
+
+
+            <div class="product-info">
+
+                <small>
+                    {{ product.brand or 'Various Brands' }}
+                    ·
+                    {{ product.gender }}
+                </small>
+
+                <h3>
+                    {{ product.product_name }}
+                </h3>
+
+                <strong>
+                    ₹{{ "%.2f"|format(product.price) }}
+                </strong>
+
+                <span class="stock-note">
+                    {{ product.stock_quantity }} in stock
+                </span>
+
+            </div>
+
+        </article>
+
+        {% else %}
+
+            <div class="empty-state">
+                No matching products found.
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

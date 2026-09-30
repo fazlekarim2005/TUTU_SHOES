@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Order Confirmed | TUTU SHOES{% endblock %}
+{% block content %}
+<section class="section narrow center">
+    <div class="success-icon">✓</div>
+    <p class="eyebrow">ORDER CONFIRMED</p>
+    <h1>Thank you, {{ order.customer_name }}.</h1>
+    <p>Your order has been recorded successfully.</p>
+    <div class="order-card">
+        <div><span>Order ID</span><strong>{{ order.order_id }}</strong></div>
+        <div><span>Payment</span><strong>{{ order.payment_status }}</strong></div>
+        <div><span>Status</span><strong>{{ order.order_status }}</strong></div>
+        <div><span>Total</span><strong>₹{{ "%.2f"|format(order.total_amount) }}</strong></div>
+    </div>
+    <a class="btn primary" href="{{ url_for('products') }}">Continue Shopping</a>
+</section>
+{% endblock %}

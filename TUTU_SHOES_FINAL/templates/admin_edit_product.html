@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Product | TUTU SHOES</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+<body class="admin-body">
+
+<header class="admin-header">
+
+    <a
+        class="brand"
+        href="{{ url_for('admin_dashboard') }}"
+    >
+        TUTU SHOES ADMIN
+    </a>
+
+    <nav>
+        <a href="{{ url_for('admin_products') }}">
+            Products
+        </a>
+    </nav>
+
+</header>
+
+
+<main class="admin-main narrow">
+
+    <div class="admin-head">
+
+        <div>
+
+            <p class="eyebrow">
+                CATALOGUE
+            </p>
+
+            <h1>
+                Edit Product
+            </h1>
+
+        </div>
+
+    </div>
+
+
+    <form
+        class="form-card"
+        method="POST"
+        action="{{ url_for('edit_product', product_id=product.id) }}"
+        enctype="multipart/form-data"
+    >
+
+        <div class="form-grid">
+
+
+            <!-- Product Name -->
+
+            <label>
+
+                Product Name
+
+                <input
+                    name="product_name"
+                    value="{{ product.product_name }}"
+                    required
+                >
+
+            </label>
+
+
+            <!-- Brand -->
+
+            <label>
+
+                Brand
+
+                <input
+                    name="brand"
+                    value="{{ product.brand or '' }}"
+                >
+
+            </label>
+
+
+            <!-- Category -->
+
+            <label>
+
+                Category
+
+                <select name="category" required>
+
+                    {% for c in categories %}
+
+                    <option
+                        value="{{ c }}"
+                        {% if product.category == c %}selected{% endif %}
+                    >
+                        {{ c }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </label>
+
+
+            <!-- Gender -->
+
+            <label>
+
+                Gender
+
+                <select name="gender" required>
+
+                    {% for g in genders %}
+
+                    <option
+                        value="{{ g }}"
+                        {% if product.gender == g %}selected{% endif %}
+                    >
+                        {{ g }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </label>
+
+
+            <!-- Price -->
+
+            <label>
+
+                Price (₹)
+
+                <input
+                    type="number"
+                    name="price"
+                    step="0.01"
+                    min="0"
+                    value="{{ product.price }}"
+                    required
+                >
+
+            </label>
+
+
+            <!-- Stock -->
+
+            <label>
+
+                Stock Quantity
+
+                <input
+                    type="number"
+                    name="stock_quantity"
+                    min="0"
+                    value="{{ product.stock_quantity }}"
+                    required
+                >
+
+            </label>
+
+
+            <!-- Sizes -->
+
+            <label>
+
+                Sizes
+
+                <input
+                    name="sizes"
+                    value="{{ product.sizes or '' }}"
+                    placeholder="6,7,8,9,10"
+                >
+
+            </label>
+
+
+            <!-- Colors -->
+
+            <label>
+
+                Colors
+
+                <input
+                    name="colors"
+                    value="{{ product.colors or '' }}"
+                    placeholder="Black,Brown"
+                >
+
+            </label>
+
+
+            <!-- Product Image -->
+
+            <label class="wide">
+
+                Product Image
+
+                {% if product.image_url %}
+
+                    <div style="margin: 10px 0;">
+
+                        {% if product.image_url.startswith('http') %}
+
+                            <img
+                                src="{{ product.image_url }}"
+                                alt="Current Product Image"
+                                style="
+                                    width: 120px;
+                                    height: 120px;
+                                    object-fit: cover;
+                                    border-radius: 10px;
+                                    border: 1px solid #ddd;
+                                "
+                            >
+
+                        {% else %}
+
+                            <img
+                                src="{{ url_for('static', filename=product.image_url) }}"
+                                alt="Current Product Image"
+                                style="
+                                    width: 120px;
+                                    height: 120px;
+                                    object-fit: cover;
+                                    border-radius: 10px;
+                                    border: 1px solid #ddd;
+                                "
+                            >
+
+                        {% endif %}
+
+                    </div>
+
+                {% endif %}
+
+                <input
+                    type="file"
+                    name="product_image"
+                    accept=".jpg,.jpeg,.png,.webp"
+                >
+
+                <small>
+                    Leave empty to keep the current image.
+                    JPG, JPEG, PNG or WEBP only.
+                </small>
+
+            </label>
+
+
+            <!-- Description -->
+
+            <label class="wide">
+
+                Description
+
+                <textarea
+                    name="description"
+                    rows="5"
+                >{{ product.description or '' }}</textarea>
+
+            </label>
+
+
+            <!-- Status -->
+
+            <label>
+
+                Status
+
+                <select name="status">
+
+                    <option
+                        value="Active"
+                        {% if product.status == 'Active' %}selected{% endif %}
+                    >
+                        Active
+                    </option>
+
+                    <option
+                        value="Inactive"
+                        {% if product.status == 'Inactive' %}selected{% endif %}
+                    >
+                        Inactive
+                    </option>
+
+                </select>
+
+            </label>
+
+
+        </div>
+
+
+        <!-- Buttons -->
+
+        <div class="form-actions">
+
+            <button
+                class="btn primary"
+                type="submit"
+            >
+                Update Product
+            </button>
+
+            <a
+                class="btn"
+                href="{{ url_for('admin_products') }}"
+            >
+                Cancel
+            </a>
+
+        </div>
+
+    </form>
+
+</main>
+
+</body>
+
+</html>

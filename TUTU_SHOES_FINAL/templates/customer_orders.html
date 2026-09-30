@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}My Orders | TUTU SHOES{% endblock %}
+
+{% block content %}
+
+<section class="section">
+
+    <div class="admin-head">
+        <div>
+            <p class="eyebrow">MY ACCOUNT</p>
+            <h1>My Orders</h1>
+        </div>
+    </div>
+
+    {% if orders %}
+
+    <div class="table-card">
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Payment</th>
+                    <th>Status</th>
+                    <th>Tracking</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for order in orders %}
+
+                <tr>
+
+                    <td>
+                        <strong>{{ order.order_id }}</strong>
+                    </td>
+
+                    <td>
+                        {{ order.created_at }}
+                    </td>
+
+                    <td>
+                        ₹{{ "%.2f"|format(order.total_amount) }}
+                    </td>
+
+                    <td>
+                        {{ order.payment_status }}
+                    </td>
+
+                    <td>
+                        <strong>{{ order.order_status }}</strong>
+                    </td>
+
+                    <td>
+                        <a
+                            class="action-btn"
+                            href="{{ url_for('customer_order_tracking', order_id=order.order_id) }}"
+                        >
+                            Track Order
+                        </a>
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+    </div>
+
+    {% else %}
+
+    <div class="empty-state">
+
+        <h2>No orders yet</h2>
+
+        <p>
+            You haven't placed any orders yet.
+        </p>
+
+        <a class="btn primary" href="{{ url_for('products') }}">
+            Start Shopping
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}
